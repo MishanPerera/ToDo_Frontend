@@ -20,12 +20,19 @@ function App() {
     }
   };
 
+  const handleLogout = () => {
+    setAuthenticated(false);
+  };
+
   return (
     <Router>
       <div className="container">
         {authenticated ? (
           <>
             <Header />
+            <button className="button-header" onClick={handleLogout}>
+              Logout
+            </button>
             <Routes>
               <Route path="/" element={<ToDoList />}></Route>
             </Routes>
@@ -49,7 +56,9 @@ function App() {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </label>
-              <button type="submit">Login</button>
+              <button className="button-submit" type="submit">
+                Login
+              </button>
             </form>
           </div>
         )}

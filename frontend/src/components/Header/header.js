@@ -1,13 +1,16 @@
-import React from "react";
-import { NavLink, Link, withRouter } from "react-router-dom";
+import { React, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./header.css";
 import ToDoList from "../todo/todo-list";
 import App from "../../App";
 
-const Header = ({ history, isLogged }) => {
+const Header = () => {
+  const [authenticated, setAuthenticated] = useState();
+  const navigate = useNavigate();
+
   const handleClick = () => {
-    history.push("/");
-    isLogged(false);
+    setAuthenticated(false);
+    navigate("/");
   };
 
   return (
@@ -22,11 +25,7 @@ const Header = ({ history, isLogged }) => {
             flexDirection: "row",
             alignItems: "center",
           }}
-        >
-          <button className="button-header" onClick={handleClick}>
-            Log Out
-          </button>
-        </div>
+        ></div>
       </div>
     </nav>
   );
