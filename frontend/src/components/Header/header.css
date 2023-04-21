@@ -1,0 +1,30 @@
+.nav-h {
+  height: 50px;
+  border: 1px solid #dfdfdf;
+  background-color: rgb(41, 41, 56);
+}
+
+.div-header {
+  width: 80%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size: medium;
+}
+.div-svg {
+  height: 30px;
+  width: 30px;
+  padding: 0 20px;
+  color: white;
+  margin-bottom: 10px;
+}
+.active {
+  border-bottom: 2px solid firebrick;
+}
+
+.div-header button {
+  background-color: rgb(41, 41, 56);
+}

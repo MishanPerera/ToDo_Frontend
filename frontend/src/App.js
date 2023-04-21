@@ -1,5 +1,8 @@
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import ToDoList from "./components/todo/todo-list";
+import Header from "./components/Header/header";
 import { useState, useEffect } from "react";
 
 function App() {
@@ -18,35 +21,40 @@ function App() {
   };
 
   return (
-    <div className="container">
-      {authenticated ? (
-        <>
-          <ToDoList />
-        </>
-      ) : (
-        <div className="login">
-          <form onSubmit={handleLogin}>
-            <label>
-              Username:
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </label>
-            <label>
-              Password:
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </label>
-            <button type="submit">Login</button>
-          </form>
-        </div>
-      )}
-    </div>
+    <Router>
+      <div className="container">
+        {authenticated ? (
+          <>
+            <Header />
+            <Routes>
+              <Route path="/" element={<ToDoList />}></Route>
+            </Routes>
+          </>
+        ) : (
+          <div className="login">
+            <form onSubmit={handleLogin}>
+              <label>
+                Username:
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </label>
+              <label>
+                Password:
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </label>
+              <button type="submit">Login</button>
+            </form>
+          </div>
+        )}
+      </div>
+    </Router>
   );
 }
 

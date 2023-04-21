@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import _ from "lodash";
+import Popup from "../popup/Popup";
+import "./todo-list.css";
 
 const ToDoList = () => {
   const pageSize = 20;
@@ -8,13 +10,7 @@ const ToDoList = () => {
   const [paginatedToDos, setPaginatedToDos] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [toDos, setToDOs] = useState();
-
-  // const [modalInfo, setModalInfo] = useState([]);
-  // const [showModal, setShowModal] = useState(false);
-
-  // const [show, setShow] = useState(false);
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
+  const [selectedTodo, setSelectedTodo] = useState();
 
   useEffect(() => {
     axios
@@ -40,10 +36,9 @@ const ToDoList = () => {
     setPaginatedToDos(paginatedToDos);
   };
 
-  const rowEvents = {
-    onClick: (row) => {
-      console.log(row);
-    },
+  const handleRowClick = (id) => {
+    setSelectedTodo(id);
+    console.log(`Clicked on row with ID ${id}`);
   };
 
   return (
@@ -51,7 +46,7 @@ const ToDoList = () => {
       {!paginatedToDos ? (
         "No Data Found"
       ) : (
-        <table className="table">
+        <table className="todo-table">
           <thead>
             <tr>
               <th>User ID</th>
@@ -62,16 +57,12 @@ const ToDoList = () => {
           </thead>
           <tbody>
             {paginatedToDos.map((toDo, index) => (
-              <tr key={index}>
+              <tr key={index} onClick={() => handleRowClick(toDo.id)}>
                 <td>{toDo.userId}</td>
                 <td>{toDo.id}</td>
                 <td>{toDo.title}</td>
                 <td>
-                  <p
-                    className={
-                      toDo.completed ? "btn btn-success" : "btn btn-danger"
-                    }
-                  >
+                  <p className={toDo.completed ? "complete" : "pending"}>
                     {toDo.completed ? "Completed" : "Pending"}
                   </p>
                 </td>
@@ -79,6 +70,9 @@ const ToDoList = () => {
             ))}
           </tbody>
         </table>
+      )}
+      {selectedTodo && (
+        <Popup todo={selectedTodo} onClose={() => setSelectedTodo(null)} />
       )}
       <nav className="d-flex justify-content-center">
         <ul className="pagination">
